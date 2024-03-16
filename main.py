@@ -1,16 +1,23 @@
 import desenhos as d
+from random import choice
 
-palavra = "maravilha"
+lista_de_palavras = list()
+arquivo = open("palavras.txt", "r")
+for linha in arquivo:
+  palavra = linha.strip()
+  lista_de_palavras.append(palavra)
+
+palavra_sorteada = choice(lista_de_palavras).lower()
 
 digitadas = []
 acertos = []
 erros = 0
 
 while True:
-  adivinha = d.imprimir_palavra_secreta(palavra, acertos)
+  adivinha = d.imprimir_palavra_secreta(palavra_sorteada, acertos)
 
   # * CONDIÇÃO DE VITÓRIA
-  if adivinha == palavra:
+  if adivinha == palavra_sorteada:
     print("VOCÊ ACERTOU!!!")
     break
   
@@ -21,7 +28,7 @@ while True:
     continue
   else:
     digitadas += tentativa
-    if tentativa in palavra:
+    if tentativa in palavra_sorteada:
       acertos += tentativa
     else:
       erros += 1
@@ -32,5 +39,5 @@ while True:
   # * CONDIÇÃO DE DERROTA
   if erros == 6:
     print("ENFORCADO!")
-    print(f"A PALAVRA ERA: {palavra}")
+    print(f"A PALAVRA ERA: {palavra_sorteada}")
     break

@@ -1,7 +1,9 @@
 import desenhos as d
 from random import choice
+import bd
 
 def jogar():
+  
   lista_de_palavras = list()
   arquivo = open("palavras.txt", "r")
   for linha in arquivo:
@@ -9,10 +11,13 @@ def jogar():
     lista_de_palavras.append(palavra)
   
   palavra_sorteada = choice(lista_de_palavras).lower()
+
   
   digitadas = []
   acertos = []
   erros = 0
+
+  nome = input("Digite seu nome: ")
   
   while True:
     adivinha = d.imprimir_palavra_secreta(palavra_sorteada, acertos)
@@ -35,10 +40,12 @@ def jogar():
         erros += 1
         print("VOCÊ ERROU!")
   
-    d.desenho_forca(erros)
+    pontuacao = d.desenho_forca(erros)
   
     # * CONDIÇÃO DE DERROTA
     if erros == 6:
       print("ENFORCADO!")
       print(f"A PALAVRA ERA: {palavra_sorteada}")
       break
+
+  bd.inserir_dados(nome, pontuacao)
